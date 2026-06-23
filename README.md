@@ -1,4 +1,4 @@
-readme = """# Real-Time Credit Card Fraud Detection System
+readme= """# Real-Time Credit Card Fraud Detection System
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![XGBoost](https://img.shields.io/badge/XGBoost-3.2.0-green)
