@@ -1,0 +1,22 @@
+# Data files
+data/
+*.csv
+
+# Model files
+models/
+*.pkl
+*.tar.gz
+*.zip
+
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Large files
+dashboard/*.pbix
+
+# Environment variables
+.env
+*.env
