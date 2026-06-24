@@ -186,3 +186,6 @@ Navya
 📧 navya.yalavarthi1@gmail.com
 🔗 LinkedIn: https://www.linkedin.com/in/navya-yalavarthi-b21297289/
 
+
+## License
+MIT License — for educational and portfolio purposes.
