@@ -38,11 +38,10 @@ Evaluation & Comparison
 ↓
 Best Model Deployment
 ↓
-FastAPI → AWS SageMaker → Lambda → S3
+FastAPI -> AWS SageMaker -> Lambda -> S3
 ↓
 Power BI Monitoring Dashboard
 ```
-
 ## Tech Stack
 
 - **Languages:** Python 3.11
@@ -73,14 +72,12 @@ Power BI Monitoring Dashboard
 ## Project Structure
 ```
 fraud-detection/
-│
-├── 📁 notebooks/
-│   └── Fraud Detection.ipynb        # Complete ML pipeline
-│
-├── 📁 src/
-│   └── api.py                       # FastAPI service
-│
-├── 📁 output/
+
+├── notebooks/
+│   └── Fraud Detection.ipynb
+├── src/
+│   └── api.py
+├── output/
 │   ├── class_distribution.png
 │   ├── amount_distribution.png
 │   ├── fraud_by_hour.png
@@ -90,12 +87,10 @@ fraud-detection/
 │   ├── model_comparison.csv
 │   ├── model_comparison_chart.png
 │   └── confusion_matrix_comparison.png
-│
-├── 📁 dashboard/
-│   └── fraud_dashboard.pbix         # Power BI dashboard
-│
-├── 📁 screenshots/
-│  ├── IAM_roles.png
+├── dashboard/
+│   └── fraud_dashboard.pbix
+├── screenshots/
+│   ├── IAM_roles.png
 │   ├── Jupyter_predictions.png
 │   ├── Lambda_function.png
 │   ├── S3_bucket_files.png
@@ -113,7 +108,6 @@ cd Real-Time-Fraud-Detection
 
 python -m venv venv
 source venv/bin/activate
-# Windows: venv\Scripts\activate
 
 pip install -r requirements.txt
 
@@ -142,14 +136,11 @@ Python · XGBoost · TensorFlow · Keras · Deep Learning · Scikit-learn · Ran
 
 ## Author
 
-Navya Yalavarthi
-📧 navya.yalavarthi1@gmail.com
-🔗 LinkedIn: https://www.linkedin.com/in/navya-yalavarthi-b21297289/
-🐙 GitHub: https://github.com/navyayalavarthi
+**Navya Yalavarthi**
+- Email: navya.yalavarthi1@gmail.com
+- LinkedIn: [linkedin.com/in/navya-yalavarthi-b21297289](https://www.linkedin.com/in/navya-yalavarthi-b21297289/)
+- GitHub: [github.com/navyayalavarthi](https://github.com/navyayalavarthi)
 
 ## License
 
-MIT License — for educational and portfolio purposes.
-Credit card dataset from Kaggle ULB Machine Learning Group.
-
-
+MIT License — for educational and portfolio purposes. Credit card dataset from Kaggle ULB Machine Learning Group.
