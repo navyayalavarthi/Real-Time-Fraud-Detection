@@ -1,134 +1,106 @@
-## Real-Time Credit Card Fraud Detection System
+# Real-Time Credit Card Fraud Detection System
 
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![XGBoost](https://img.shields.io/badge/XGBoost-3.2.0-green)
-![AWS SageMaker](https://img.shields.io/badge/AWS-SageMaker%20%7C%20Lambda%20%7C%20S3-orange)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.136.3-teal?style=flat-square&logo=fastapi)
-![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-yellow)
+A production-ready machine learning system that detects fraudulent credit card transactions in real time using XGBoost, Deep Learning, and AWS cloud infrastructure.
 
-## Project Overview
+[![Python](https://img.shields.io/badge/Python-3.11-blue)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.21-orange)](https://www.tensorflow.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-3.2-green)](https://xgboost.readthedocs.io/)
+[![AWS](https://img.shields.io/badge/AWS-SageMaker%20Lambda%20S3-yellow)](https://aws.amazon.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.136-teal)](https://fastapi.tiangolo.com/)
+[![License](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
 
-Designed and deployed an end-to-end fraud detection pipeline to identify potentially fraudulent credit card transactions in real time. Built machine learning models using XGBoost and developed cloud-based workflows for scalable model inference and monitoring.
+## Overview
 
-## Key Results
+This project implements an end-to-end fraud detection pipeline that identifies fraudulent credit card transactions with 98.7% ROC-AUC. The system processes 284,807 transactions, handles severe class imbalance using SMOTE, and benchmarks four machine learning models including a TensorFlow Neural Network. The best model is deployed on AWS SageMaker for real-time inference, with Power BI dashboards monitoring fraud trends and model performance.
 
-| Metric | Score |
-|--------|-------|
-| ROC-AUC | 0.98+ |
-| Recall (Fraud) | 85.71% |
-| Precision (Fraud) | 77.06% |
-| F1 Score | 81.16% |
-| False Positives | 25 |
-| False Negatives | 14 |
-| Total Transactions | 284,807 |
-| Fraud Cases Detected | 84 out of 98 |
+## Results
 
-## Project Architecture
+| Model | ROC-AUC | Precision | Recall | F1 Score |
+|-------|---------|-----------|--------|----------|
+| Logistic Regression | 0.9727 | 0.0547 | 0.9184 | 0.1033 |
+| Random Forest | 0.9848 | 0.4095 | 0.8776 | 0.5584 |
+| XGBoost | 0.9712 | 0.8830 | 0.8469 | 0.8646 |
+| TensorFlow Neural Network | 0.9872 | 0.6357 | 0.8367 | 0.7225 |
+
+XGBoost was selected for production deployment due to the highest F1 score and lowest false positive rate.
+
+## Architecture
 ```
-creditcard.csv
+Dataset (284,807 transactions)
 ↓
-Data Preprocessing & Feature Engineering
+Preprocessing & Feature Engineering
 ↓
-SMOTE Balancing → XGBoost Training
+SMOTE Class Balancing
 ↓
-Model Evaluation (ROC-AUC, Precision, Recall)
+Model Training (LR, RF, XGBoost, Neural Network)
 ↓
-FastAPI Inference Service
+Evaluation & Comparison
 ↓
-AWS S3 (Model Storage)
+Best Model Deployment
 ↓
-AWS SageMaker (Model Endpoint)
+FastAPI → AWS SageMaker → Lambda → S3
 ↓
-AWS Lambda (Inference Trigger)
-↓
-Power BI Dashboard (Monitoring)
+Power BI Monitoring Dashboard
 ```
+
+## Tech Stack
+
+- **Languages:** Python 3.11
+- **ML Frameworks:** Scikit-learn, XGBoost, TensorFlow, Keras
+- **Cloud:** AWS SageMaker, AWS Lambda, Amazon S3, IAM
+- **API:** FastAPI, Uvicorn, Pydantic
+- **Visualization:** Power BI, Matplotlib, Seaborn
+- **Data Processing:** Pandas, NumPy, imbalanced-learn
+
+## Features
+
+- Real-time fraud detection with sub-second latency
+- Four-model comparison framework
+- Deep Learning (TensorFlow) and Gradient Boosting (XGBoost) implementations
+- SMOTE-based class imbalance handling
+- AWS serverless deployment for scalability
+- Power BI dashboard with 13 DAX measures
+- Model drift monitoring
+
 ## Dataset
 
 - **Source:** [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 - **Size:** 284,807 transactions
-- **Fraud cases:** 492 (0.17%)
-- **Features:** V1-V28 (PCA transformed), Amount, Time
-
-## Features Engineered
-
-| Feature | Description |
-|---------|-------------|
-| Amount_scaled | StandardScaler applied to Amount |
-| Time_scaled | StandardScaler applied to Time |
-| hour | Hour of day extracted from Time (0-23) |
-| log_amount | log1p transformation of Amount |
-
-## Model Details
-
-- **Algorithm:** XGBoost Classifier
-- **Class Imbalance:** Handled using SMOTE
-- **Trees:** 300 with early stopping
-- **Key Parameters:** max_depth=6, learning_rate=0.1, scale_pos_weight=577
-
-## AWS Infrastructure
-
-| Service | Resource | Purpose |
-|---------|----------|---------|
-| Amazon S3 | fraud-detection-navya | Model and prediction storage |
-| AWS SageMaker | fraud-detection-model-v2 | Model hosting and inference |
-| AWS Lambda | fraud-detection-lambda | Automated inference trigger |
-| IAM | FraudDetectionSageMakerRole | SageMaker permissions |
-| IAM | FraudDetectionLambdaRole | Lambda permissions |
-
-## Real-Time Prediction Example
-
-```json
-Input Transaction:
-{
-  "V1": -2.31, "V2": 1.95, ... "V28": -0.14,
-  "Amount": 0.00,
-  "Time": 406.0
-}
-
-Output:
-{
-  "fraud_probability": 0.9998,
-  "is_fraud": true,
-  "risk_level": "HIGH",
-  "recommended_action": "Block transaction immediately",
-  "timestamp": "2026-06-20T22:13:33"
-}
-```
-
-## Power BI Dashboard
-
-4-page monitoring dashboard built in Power BI:
-
-| Page | Description |
-|------|-------------|
-| Fraud Trends | Fraud count by hour, risk level distribution, revenue at risk |
-| Model Performance | Confusion matrix, Precision, Recall, F1, ROC-AUC gauge |
-| False Positives | Transaction-level false positive analysis by hour |
-| Model Drift | Weekly AUC trend, fraud volume over time, drift alert |
+- **Features:** 30 (V1-V28 PCA features + Amount + Time)
+- **Target:** Binary (Fraud / Normal)
+- **Class Distribution:** 492 fraud (0.17%) vs 284,315 normal
 
 ## Project Structure
 ```
 fraud-detection/
-
-├── notebooks/
-│   └── Fraud Detection.ipynb    # Complete ML pipeline
-├── src/
-│   ├── inference.py             # SageMaker inference script
-│   └── lambda_function.py       # AWS Lambda function
-├── output/
+│
+├── 📁 notebooks/
+│   └── Fraud Detection.ipynb        # Complete ML pipeline
+│
+├── 📁 src/
+│   └── api.py                       # FastAPI service
+│
+├── 📁 output/
 │   ├── class_distribution.png
 │   ├── amount_distribution.png
 │   ├── fraud_by_hour.png
 │   ├── confusion_matrix.png
 │   ├── feature_importance.png
-│   └── precision_recall_curve.png  
-├── screenshots/
+│   ├── precision_recall_curve.png
+│   ├── model_comparison.csv
+│   ├── model_comparison_chart.png
+│   └── confusion_matrix_comparison.png
+│
+├── 📁 dashboard/
+│   └── fraud_dashboard.pbix         # Power BI dashboard
+│
+├── 📁 screenshots/
+│  ├── IAM_roles.png
+│   ├── Jupyter_predictions.png
+│   ├── Lambda_function.png
 │   ├── S3_bucket_files.png
 │   ├── SageMaker_model.png
-│   ├── Lambda_function.png
-│   ├── IAM_roles.png
-│   └── Jupyter_predictions.png
+│   └── PowerBI_page1-4.png
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -136,56 +108,48 @@ fraud-detection/
 ## Setup and Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/navyayalavarthi/fraud-detection.git
-cd fraud-detection
+git clone https://github.com/navyayalavarthi/Real-Time-Fraud-Detection.git
+cd Real-Time-Fraud-Detection
 
-# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\\Scripts\\activate
+source venv/bin/activate
+# Windows: venv\Scripts\activate
 
-# Install dependencies
 pip install -r requirements.txt
 
-# Download dataset
-# Go to https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
-# Download creditcard.csv and place in data/ folder
+# Download dataset from Kaggle
+# https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+# Place creditcard.csv in data/ folder
 
-# Run the notebook
-jupyter notebook notebooks/Fraud\\ Detection.ipynb
+# Run notebook
+jupyter notebook "notebooks/Fraud Detection.ipynb"
+
+# Start API
+uvicorn src.api:app --reload --port 8001
 ```
-
-## AWS Configuration
-
-```bash
-# Configure AWS credentials
-aws configure
-
-# Required services
-# - Amazon S3 (model storage)
-# - AWS SageMaker (model endpoint)
-# - AWS Lambda (inference trigger)
-# - IAM roles (permissions)
-```
-
-## FastAPI Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| /predict | POST | Real-time fraud scoring |
-| /health | GET | API health check |
-| /docs | GET | Interactive API documentation |
 
 ## Skills Used
 
-Python · XGBoost · Scikit-learn · AWS SageMaker · AWS Lambda · Amazon S3 · FastAPI · Power BI · SQL · Jupyter
+Python · XGBoost · TensorFlow · Keras · Deep Learning · Scikit-learn · Random Forest · Logistic Regression · SMOTE · Feature Engineering · Model Comparison · AWS SageMaker · AWS Lambda · Amazon S3 · IAM · FastAPI · Power BI · DAX · Pandas · NumPy · Matplotlib · Seaborn · Jupyter
+
+## Key Learnings
+
+- Class imbalance handling significantly impacts model performance
+- Deep Learning (Neural Network) achieved highest ROC-AUC
+- XGBoost provided best balance of precision and recall for production
+- SMOTE balancing improved minority class detection
+- AWS serverless deployment enables real-time fraud scoring at scale
 
 ## Author
 
-Navya 
+Navya Yalavarthi
 📧 navya.yalavarthi1@gmail.com
 🔗 LinkedIn: https://www.linkedin.com/in/navya-yalavarthi-b21297289/
-
+🐙 GitHub: https://github.com/navyayalavarthi
 
 ## License
+
 MIT License — for educational and portfolio purposes.
+Credit card dataset from Kaggle ULB Machine Learning Group.
+
+
