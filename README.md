@@ -137,8 +137,6 @@ Python · XGBoost · TensorFlow · Keras · Deep Learning · Scikit-learn · Ran
 ## Author
 
 **Navya Yalavarthi**
-- Email: navya.yalavarthi1@gmail.com
-- LinkedIn: [linkedin.com/in/navya-yalavarthi-b21297289](https://www.linkedin.com/in/navya-yalavarthi-b21297289/)
 - GitHub: [github.com/navyayalavarthi](https://github.com/navyayalavarthi)
 
 ## License
